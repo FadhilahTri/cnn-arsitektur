@@ -1,3 +1,13 @@
+---
+title: CNN Klasifikasi Arsitektur
+emoji: 🏛️
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Klasifikasi Arsitektur Menggunakan CNN (Convolutional Neural Network)
 
 Proyek ini adalah aplikasi web berbasis Flask yang menggunakan model Deep Learning (CNN) dengan TensorFlow/Keras untuk mengklasifikasikan gaya arsitektur bangunan berdasarkan gambar yang diunggah oleh pengguna.
