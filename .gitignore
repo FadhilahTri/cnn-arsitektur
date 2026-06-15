@@ -14,7 +14,7 @@ env/
 
 # Dataset & large models
 dataset/
-model/*.h5
+
 
 # Flask user uploads (keep the folder structure but ignore uploaded files)
 static/uploads/*
