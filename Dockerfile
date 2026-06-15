@@ -1,12 +1,6 @@
 # Gunakan Python 3.10 slim sebagai base image
 FROM python:3.10-slim
 
-# Install dependency sistem untuk Pillow/matplotlib jika diperlukan
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
-
 # Tentukan direktori kerja di dalam container
 WORKDIR /app
 
