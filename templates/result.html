@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Klasifikasi - ArchiClassify AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            color: white;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.1) !important;
+            backdrop-filter: blur(10px);
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+        }
+        .result-badge {
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            border-radius: 15px;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .confidence-bar {
+            height: 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #e94560, #0f3460);
+        }
+        .uploaded-img {
+            max-height: 400px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(233,69,96,0.4);
+        }
+        .info-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-5">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-building me-2"></i>ArchiClassify AI
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-check-circle me-3" style="color: #e94560;"></i>
+                Hasil Klasifikasi
+            </h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card p-4 mb-4">
+                    <div class="row">
+                        <!-- Gambar yang diupload -->
+                        <div class="col-md-6 text-center mb-4">
+                            <h5 class="mb-3"><i class="fas fa-image me-2" style="color: #e94560;"></i>Gambar yang Diupload</h5>
+                            <img src="/static/uploads/{{ image_path }}" 
+                                 class="uploaded-img img-fluid" alt="Uploaded Image">
+                        </div>
+
+                        <!-- Hasil Prediksi -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3"><i class="fas fa-brain me-2" style="color: #e94560;"></i>Hasil Prediksi AI</h5>
+                            
+                            <div class="text-center mb-4">
+                                <div class="result-badge text-white">
+                                    <i class="fas fa-landmark me-2"></i>
+                                    {{ prediction.replace('_', ' ') }}
+                                </div>
+                            </div>
+
+                            <!-- Confidence -->
+                            <div class="info-card">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span><i class="fas fa-percentage me-2"></i>Tingkat Kepercayaan</span>
+                                    <span class="fw-bold">{{ confidence }}%</span>
+                                </div>
+                                <div class="progress" style="height: 20px; border-radius: 10px;">
+                                    <div class="confidence-bar progress-bar" 
+                                         style="width: {{ confidence }}%">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Info Gaya Arsitektur -->
+                            <div class="info-card mt-3">
+                                <h6><i class="fas fa-info-circle me-2" style="color: #e94560;"></i>Tentang Gaya Ini</h6>
+                                <p class="text-white-50 mb-0" id="archInfo">
+                                    {% if prediction == '21st_Century' %}
+                                        Arsitektur abad ke-21 ditandai dengan penggunaan teknologi modern, material inovatif, dan desain yang berkelanjutan.
+                                    {% elif prediction == 'Baroque' %}
+                                        Gaya Baroque dikenal dengan ornamen yang kaya, detail yang rumit, dan kesan dramatis yang kuat.
+                                    {% elif prediction == 'Classical' %}
+                                        Arsitektur Klasik terinspirasi dari Yunani dan Romawi kuno, dengan kolom-kolom megah dan proporsi yang harmonis.
+                                    {% elif prediction == 'Early_Christian_Medieval' %}
+                                        Gaya ini berkembang pada era Kristen awal hingga Abad Pertengahan, dengan ciri khas lengkungan dan menara gereja.
+                                    {% elif prediction == 'Eclecticism' %}
+                                        Eklektisisme menggabungkan berbagai gaya arsitektur dari periode yang berbeda dalam satu bangunan.
+                                    {% elif prediction == 'Modernism' %}
+                                        Arsitektur Modern menekankan fungsi, kesederhanaan bentuk, dan penggunaan material industri seperti beton dan baja.
+                                    {% elif prediction == 'Neoclassicism' %}
+                                        Neoklasikisme adalah kebangkitan kembali gaya Klasik Yunani dan Romawi pada abad ke-18 dan ke-19.
+                                    {% elif prediction == 'Renaissance_and_Colonialism' %}
+                                        Gaya Renaissance menandai kebangkitan seni dan arsitektur klasik di Eropa pada abad ke-14 hingga ke-17.
+                                    {% elif prediction == 'Revivalism' %}
+                                        Revivalisme adalah gerakan yang menghidupkan kembali gaya arsitektur historis pada periode modern.
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Kembali -->
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-back text-white fw-bold">
+                        <i class="fas fa-arrow-left me-2"></i>Klasifikasi Gambar Lain
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
